@@ -42,7 +42,7 @@ class Admin_Menu {
             </h1>
         </div>
 
-        <div id="be-tabs">
+        <div id="be-tabs" class="mt-3">
             <div id="tabs">
                 <ul class="nav nav-pills">
                     <li class="nav-item"><a href="#api" class="nav-link  be-nav-links">API</a></li>

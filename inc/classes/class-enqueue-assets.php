@@ -49,6 +49,10 @@ class Enqueue_Assets {
     }
 
     public function admin_enqueue_script() {
+        // register confetti js
+        wp_register_script( "be-confetti", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/js/confetti.min.js", [], false, true );
+
+        // register admin menu js
         wp_register_script( "be-admin-menu", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/js/admin-menu.js", ['jquery'], false, true );
         wp_localize_script( 'be-admin-menu', 'bulkProductImport', [
             'ajax_url' => admin_url( 'admin-ajax.php' ),
@@ -56,6 +60,7 @@ class Enqueue_Assets {
         ] );
 
         wp_enqueue_script( "jquery-ui-tabs" );
+        wp_enqueue_script( "be-confetti" );
         wp_enqueue_script( "be-admin-menu" );
     }
 }
