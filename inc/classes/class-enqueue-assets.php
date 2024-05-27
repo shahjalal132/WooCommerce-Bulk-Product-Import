@@ -43,14 +43,19 @@ class Enqueue_Assets {
     public function admin_enqueue_style() {
         wp_register_style( "be-admin-bootstrap", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/css/bootstrap.min.css", [], false, "all" );
         wp_register_style( "be-admin-style", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/css/be-admin.css", [], false, "all" );
+        wp_register_style( "be-admin-toastify", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/css/toastify.css", [], false, "all" );
 
         wp_enqueue_style( "be-admin-style" );
         wp_enqueue_style( "be-admin-bootstrap" );
+        wp_enqueue_style( "be-admin-toastify" );
     }
 
     public function admin_enqueue_script() {
         // register confetti js
         wp_register_script( "be-confetti", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/js/confetti.min.js", [], false, true );
+
+        // toastify js
+        wp_register_script( "toastify", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/js/toastify.js", [], false, true );
 
         // register admin menu js
         wp_register_script( "be-admin-menu", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/js/admin-menu.js", ['jquery'], false, true );
@@ -62,5 +67,6 @@ class Enqueue_Assets {
         wp_enqueue_script( "jquery-ui-tabs" );
         wp_enqueue_script( "be-confetti" );
         wp_enqueue_script( "be-admin-menu" );
+        wp_enqueue_script( "toastify" );
     }
 }

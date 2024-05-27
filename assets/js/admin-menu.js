@@ -19,9 +19,23 @@
         },
         success: function (response) {
           if (response.success) {
-            alert(response.data);
+            let successMessage = response.data;
+            // Display an info toast with no title
+            Toastify({
+              text: successMessage,
+              duration: 3000,
+              newWindow: true,
+              close: true,
+              gravity: "top", // `top` or `bottom`
+              position: "right", // `left`, `center` or `right`
+              stopOnFocus: true, // Prevents dismissing of toast on hover
+              style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
+              },
+              onClick: function () {}, // Callback after click
+            }).showToast();
           } else {
-            alert(response.data);
+            let errorMessage = response.data;
           }
         },
         error: function () {
@@ -34,7 +48,6 @@
     $("#tabs").tabs();
 
     // confetti effects
-    // Pass in the id of an element
     let confetti = new Confetti("credential-save");
 
     // Edit given parameters
