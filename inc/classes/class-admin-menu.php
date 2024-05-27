@@ -48,12 +48,15 @@ class Admin_Menu {
                     <li class="nav-item"><a href="#api" class="nav-link  be-nav-links">API</a></li>
                     <li class="nav-item"><a href="#product" class="nav-link be-nav-links">Product</a></li>
                     <li class="nav-item"><a href="#options" class="nav-link be-nav-links">Options</a></li>
+                    <li class="nav-item"><a href="#tables" class="nav-link be-nav-links">Tables</a></li>
                 </ul>
                 <div id="api">
                     <!-- api credentials -->
                     <div class="container-fluid api-credentials">
                         <div class="row">
                             <div class="col-sm-12">
+                                <h4 class="text-center mb-3">
+                                    <?php _e( 'WooCommerce API Credentials', 'bulk-product-import' ); ?></h4>
                                 <form id="client-credentials-form">
                                     <div class="d-flex align-items-center mt-2">
                                         <label for="client-id"><?php _e( 'Client ID', 'bulk-product-import' ); ?></label>
@@ -107,6 +110,12 @@ class Admin_Menu {
                         porttitor,
                         tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo.
                         Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+                </div>
+                <div id="tables">
+                    <div id="db-tables">
+                        <p>tables will be create: sync_products, sync_stock, sync_price</p>
+                        <button type="button" class="btn btn-primary" id="create-tables">Create DB Tables</button>
+                    </div>
                 </div>
             </div>
         </div>

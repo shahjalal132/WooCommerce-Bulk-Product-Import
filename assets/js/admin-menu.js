@@ -1,13 +1,14 @@
 (function ($) {
   $(document).ready(function () {
+    // handle save credentials
     $("#credential-save").on("click", function (e) {
       e.preventDefault();
 
-      //   alert("Saving credentials...");
-
+      // get credentials from form
       let client_id = $("#client-id").val();
       let client_secret = $("#client-secret").val();
 
+      // make ajax call to save credentials
       $.ajax({
         url: bulkProductImport.ajax_url,
         method: "POST",
@@ -40,6 +41,24 @@
         },
         error: function () {
           alert("An error occurred. Please try again.");
+        },
+      });
+    });
+
+    // handle db tables creation
+    $("#create-tables").on("click", function (e) {
+      e.preventDefault();
+      alert("Creating tables...");
+
+      $.ajax({
+        type: "POST",
+        url: bulkProductImport.ajax_url,
+        data: {
+          action: "create_db_tables",
+          nonce: bulkProductImport.nonce,
+        },
+        success: function (response) {
+          alert(response.data);
         },
       });
     });
