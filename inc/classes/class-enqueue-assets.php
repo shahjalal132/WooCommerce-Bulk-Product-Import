@@ -15,6 +15,8 @@ class Enqueue_Assets {
     public function setup_hooks() {
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_css' ] );
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_js' ] );
+        add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_style' ] );
+        add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_script' ] );
     }
 
     public function enqueue_css() {
@@ -36,5 +38,21 @@ class Enqueue_Assets {
         // enqueue JS
         wp_enqueue_script( "be-app" );
         wp_enqueue_script( "be-bootstrap" );
+    }
+
+    public function admin_enqueue_style() {
+        wp_register_style( "be-admin-bootstrap", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/css/bootstrap.min.css", [], false, "all" );
+
+        wp_enqueue_style( "be-admin-bootstrap" );
+    }
+
+    public function admin_enqueue_script() {
+        wp_register_script( "be-admin-menu", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/js/admin-menu.js", [], false, true );
+        wp_localize_script( 'be-admin-menu', 'bulkProductImport', [
+            'ajax_url' => admin_url( 'admin-ajax.php' ),
+            'nonce'    => wp_create_nonce( 'bulk_product_import_nonce' ),
+        ] );
+
+        wp_enqueue_script( "be-admin-menu" );
     }
 }
