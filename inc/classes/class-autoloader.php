@@ -3,9 +3,9 @@
  * Bootstraps the plugin.
  */
 
-namespace AUTOLOADER\Inc;
+namespace BULK_IMPORT\Inc;
 
-use AUTOLOADER\Inc\Traits\Singleton;
+use BULK_IMPORT\Inc\Traits\Singleton;
 
 class Autoloader {
     use Singleton;

@@ -3,7 +3,7 @@
  * Autoloader file for theme.
  */
 
-namespace AUTOLOADER\Inc\Helpers;
+namespace BULK_IMPORT\Inc\Helpers;
 
 /**
  * Auto loader function.
@@ -14,7 +14,7 @@ namespace AUTOLOADER\Inc\Helpers;
  */
 function autoloader( $resource = '' ) {
     $resource_path  = false;
-    $namespace_root = 'AUTOLOADER\\';
+    $namespace_root = 'BULK_IMPORT\\';
     $resource       = trim( $resource, '\\' );
 
     if ( empty( $resource ) || strpos( $resource, '\\' ) === false || strpos( $resource, $namespace_root ) !== 0 ) {
@@ -66,7 +66,7 @@ function autoloader( $resource = '' ) {
                 break;
         }
 
-        $resource_path = sprintf( '%s/inc/%s/%s.php', AUTOLOADER_PLUGIN_PATH, $directory, $file_name );
+        $resource_path = sprintf( '%s/inc/%s/%s.php', BULK_PRODUCT_IMPORT_PLUGIN_PATH, $directory, $file_name );
 
     }
 
@@ -82,4 +82,4 @@ function autoloader( $resource = '' ) {
 
 }
 
-spl_autoload_register( '\AUTOLOADER\Inc\Helpers\autoloader' );
+spl_autoload_register( '\BULK_IMPORT\Inc\Helpers\autoloader' );

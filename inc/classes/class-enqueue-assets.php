@@ -1,8 +1,8 @@
 <?php
 
-namespace AUTOLOADER\Inc;
+namespace BULK_IMPORT\Inc;
 
-use AUTOLOADER\Inc\Traits\Singleton;
+use BULK_IMPORT\Inc\Traits\Singleton;
 
 class Enqueue_Assets {
 
@@ -19,7 +19,7 @@ class Enqueue_Assets {
 
     public function enqueue_css() {
         // Register CSS
-        wp_register_style( "style", AUTOLOADER_ASSETS_PATH . "/css/prefix-style.css", [], false, "all" );
+        wp_register_style( "style", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/css/be-style.css", [], false, "all" );
 
         // enqueue CSS
         wp_enqueue_style( "style" );
@@ -28,7 +28,7 @@ class Enqueue_Assets {
     public function enqueue_js() {
 
         // Register JS
-        wp_register_script( "app", AUTOLOADER_ASSETS_PATH . "/js/app.js", [ 'jquery' ], false, true );
+        wp_register_script( "app", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/js/app.js", [ 'jquery' ], false, true );
 
         // enqueue JS
         wp_enqueue_script( "app" );

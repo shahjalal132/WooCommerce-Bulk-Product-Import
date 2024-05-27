@@ -24,7 +24,7 @@
  *
  */
 
-namespace AUTOLOADER\Inc\Traits;
+namespace BULK_IMPORT\Inc\Traits;
 
 trait Singleton {
 
