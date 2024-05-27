@@ -47,12 +47,13 @@ class Enqueue_Assets {
     }
 
     public function admin_enqueue_script() {
-        wp_register_script( "be-admin-menu", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/js/admin-menu.js", [], false, true );
+        wp_register_script( "be-admin-menu", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/js/admin-menu.js", ['jquery'], false, true );
         wp_localize_script( 'be-admin-menu', 'bulkProductImport', [
             'ajax_url' => admin_url( 'admin-ajax.php' ),
             'nonce'    => wp_create_nonce( 'bulk_product_import_nonce' ),
         ] );
 
+        wp_enqueue_script( "jquery-ui-tabs" );
         wp_enqueue_script( "be-admin-menu" );
     }
 }

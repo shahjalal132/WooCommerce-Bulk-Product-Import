@@ -3,7 +3,7 @@
     $("#credential-save").on("click", function (e) {
       e.preventDefault();
 
-    //   alert("Saving credentials...");
+      //   alert("Saving credentials...");
 
       let client_id = $("#client-id").val();
       let client_secret = $("#client-secret").val();
@@ -29,5 +29,8 @@
         },
       });
     });
+
+    // tabs
+    $("#tabs").tabs();
   });
 })(jQuery);
