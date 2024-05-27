@@ -68,10 +68,10 @@ class Admin_Menu {
         </div>
 
         <div id="tabs">
-            <ul>
-                <li><a href="#tabs-1">Nunc tincidunt</a></li>
-                <li><a href="#tabs-2">Proin dolor</a></li>
-                <li><a href="#tabs-3">Aenean lacinia</a></li>
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a href="#tabs-1" class="nav-link">API</a></li>
+                <li class="nav-item"><a href="#tabs-2" class="nav-link">Product</a></li>
+                <li class="nav-item"><a href="#tabs-3" class="nav-link">Options</a></li>
             </ul>
             <div id="tabs-1">
                 <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi

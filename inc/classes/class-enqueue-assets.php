@@ -42,7 +42,9 @@ class Enqueue_Assets {
 
     public function admin_enqueue_style() {
         wp_register_style( "be-admin-bootstrap", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/css/bootstrap.min.css", [], false, "all" );
+        wp_register_style( "be-admin-style", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/css/be-admin.css", [], false, "all" );
 
+        wp_enqueue_style( "be-admin-style" );
         wp_enqueue_style( "be-admin-bootstrap" );
     }
 
