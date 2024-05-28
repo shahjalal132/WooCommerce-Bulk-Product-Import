@@ -21,6 +21,16 @@ function sync_products() {
     dbDelta( $sql );
 }
 
+// Remove sync_products Table when plugin deactivated
+function remove_sync_products() {
+    global $wpdb;
+
+    $table_prefix = get_option( 'be-table-prefix' ) ?? '';
+    $table_name   = $wpdb->prefix . $table_prefix . 'sync_products';
+    $sql          = "DROP TABLE IF EXISTS $table_name;";
+    $wpdb->query( $sql );
+}
+
 function sync_stock() {
     global $wpdb;
 
@@ -39,6 +49,16 @@ function sync_stock() {
 
     require_once ABSPATH . 'wp-admin/includes/upgrade.php';
     dbDelta( $sql );
+}
+
+// Remove sync_stock Table when plugin deactivated
+function remove_sync_stock() {
+    global $wpdb;
+
+    $table_prefix = get_option( 'be-table-prefix' ) ?? '';
+    $table_name   = $wpdb->prefix . $table_prefix . 'sync_stock';
+    $sql          = "DROP TABLE IF EXISTS $table_name;";
+    $wpdb->query( $sql );
 }
 
 function sync_price() {
@@ -62,9 +82,25 @@ function sync_price() {
     dbDelta( $sql );
 }
 
+// Remove sync_price Table when plugin deactivated
+function remove_sync_price() {
+    global $wpdb;
+
+    $table_prefix = get_option( 'be-table-prefix' ) ?? '';
+    $table_name   = $wpdb->prefix . $table_prefix . 'sync_price';
+    $sql          = "DROP TABLE IF EXISTS $table_name;";
+    $wpdb->query( $sql );
+}
+
 
 function create_db_tables() {
     sync_products();
     sync_stock();
     sync_price();
+}
+
+function remove_db_tables() {
+    remove_sync_products();
+    remove_sync_stock();
+    remove_sync_price();
 }

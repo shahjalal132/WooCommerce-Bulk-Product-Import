@@ -47,6 +47,9 @@ bulk_product_import_get_theme_instance();
 
 // create db tables
 register_activation_hook( __FILE__, 'create_db_tables' );
+// removes db tables
+register_deactivation_hook( __FILE__, 'remove_db_tables' );
+
 
 // Add settings link on the plugin page
 function bpi_add_settings_link( $links ) {
@@ -54,4 +57,4 @@ function bpi_add_settings_link( $links ) {
     array_unshift( $links, $settings_link );
     return $links;
 }
-add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'bpi_add_settings_link' );
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'bpi_add_settings_link' );
