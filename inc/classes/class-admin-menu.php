@@ -6,7 +6,6 @@ defined( "ABSPATH" ) || exit( "Direct Access Not Allowed" );
 
 use BULK_IMPORT\Inc\Traits\Singleton;
 
-
 class Admin_Menu {
 
     use Singleton;
