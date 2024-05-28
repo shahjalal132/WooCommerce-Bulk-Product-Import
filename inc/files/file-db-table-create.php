@@ -3,7 +3,8 @@
 function sync_products() {
     global $wpdb;
 
-    $table_name      = $wpdb->prefix . 'sync_products';
+    $table_prefix    = get_option( 'be-table-prefix' ) ?? '';
+    $table_name      = $wpdb->prefix . $table_prefix . 'sync_products';
     $charset_collate = $wpdb->get_charset_collate();
 
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
@@ -23,7 +24,8 @@ function sync_products() {
 function sync_stock() {
     global $wpdb;
 
-    $table_name      = $wpdb->prefix . 'sync_stock';
+    $table_prefix    = get_option( 'be-table-prefix' ) ?? '';
+    $table_name      = $wpdb->prefix . $table_prefix . 'sync_stock';
     $charset_collate = $wpdb->get_charset_collate();
 
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
@@ -42,7 +44,8 @@ function sync_stock() {
 function sync_price() {
     global $wpdb;
 
-    $table_name      = $wpdb->prefix . 'sync_price';
+    $table_prefix    = get_option( 'be-table-prefix' ) ?? '';
+    $table_name      = $wpdb->prefix . $table_prefix . 'sync_price';
     $charset_collate = $wpdb->get_charset_collate();
 
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (

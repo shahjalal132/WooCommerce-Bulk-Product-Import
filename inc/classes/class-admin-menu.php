@@ -46,6 +46,7 @@ class Admin_Menu {
 
         <div id="be-tabs" class="mt-3">
             <div id="tabs">
+                
                 <ul class="nav nav-pills">
                     <li class="nav-item"><a href="#api"
                             class="nav-link be-nav-links"><?php _e( 'API', 'bulk-product-import' ); ?></a></li>
