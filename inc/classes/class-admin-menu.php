@@ -46,7 +46,7 @@ class Admin_Menu {
 
         <div id="be-tabs" class="mt-3">
             <div id="tabs">
-                
+
                 <ul class="nav nav-pills">
                     <li class="nav-item"><a href="#api"
                             class="nav-link be-nav-links"><?php _e( 'API', 'bulk-product-import' ); ?></a></li>
@@ -119,7 +119,7 @@ class Admin_Menu {
                 </div>
 
                 <div id="endpoints">
-                    <div id="api-endpoints">
+                    <div id="api-endpoints" class="common-shadow">
                         <p>
                             <?php _e( 'API Endpoints', 'bulk-product-import' ); ?>
                         </p>
