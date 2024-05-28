@@ -44,3 +44,6 @@ function bulk_product_import_get_theme_instance() {
 }
 
 bulk_product_import_get_theme_instance();
+
+// create db tables
+register_activation_hook( __FILE__, 'create_db_tables' );
