@@ -15,6 +15,7 @@ class Admin_Menu {
     public function setup_hooks() {
         add_action( 'admin_menu', [ $this, 'register_admin_menu' ] );
         add_action( 'wp_ajax_save_client_credentials', [ $this, 'save_client_credentials' ] );
+        add_action( 'wp_ajax_save_table_prefix', [ $this, 'save_table_prefix' ] );
     }
 
     public function register_admin_menu() {
@@ -33,6 +34,7 @@ class Admin_Menu {
 
         $client_id     = get_option( 'be-client-id' ) ?? '';
         $client_secret = get_option( 'be-client-secret' ) ?? '';
+        $table_prefix  = get_option( 'be-table-prefix' ) ?? '';
 
         ?>
 
@@ -67,14 +69,15 @@ class Admin_Menu {
                                 </h4>
                                 <form id="client-credentials-form">
                                     <div class="d-flex align-items-center mt-2">
-                                        <label for="client-id"><?php _e( 'Client ID', 'bulk-product-import' ); ?></label>
+                                        <label class="form-label"
+                                            for="client-id"><?php _e( 'Client ID', 'bulk-product-import' ); ?></label>
                                         <input type="text" class="form-control"
                                             style="width: 60% !important; margin-left: 4.7rem;" name="client-id" id="client-id"
                                             value="<?php echo esc_attr( $client_id ); ?>"
                                             placeholder="<?php _e( 'Client ID', 'bulk-product-import' ); ?>" required>
                                     </div>
                                     <div class="d-flex align-items-center mt-3">
-                                        <label
+                                        <label class="form-label"
                                             for="client-secret"><?php _e( 'Client Secret', 'bulk-product-import' ); ?></label>
                                         <input type="text" class="form-control ms-5" style="width: 60% !important"
                                             name="client-secret" id="client-secret"
@@ -101,11 +104,16 @@ class Admin_Menu {
                 </div>
 
                 <div id="tables">
-                    <div id="db-tables">
-                        <p><?php _e( 'Tables will be created: sync_products, sync_stock, sync_price', 'bulk-product-import' ); ?>
-                        </p>
-                        <button type="button" class="btn btn-primary"
-                            id="create-tables"><?php _e( 'Create DB Tables', 'bulk-product-import' ); ?></button>
+                    <div id="db-tables" class="common-shadow">
+                        <form action="" method="post">
+                            <div class="d-flex align-items-center">
+                                <label class="form-label"
+                                    for="table-prefix"><?php _e( 'Table Prefix', 'bulk-product-import' ); ?></label>
+                                <input type="text" class="form-control w-50 ms-5" name="table-prefix" id="table-prefix"
+                                    placeholder="Enter Table Prefix" value="<?php echo esc_attr( $table_prefix ); ?>">
+                            </div>
+                            <input type="submit" class="btn btn-primary mt-3" id="save-table-prefix" value="Save">
+                        </form>
                     </div>
                 </div>
 
@@ -137,5 +145,19 @@ class Admin_Menu {
         update_option( 'be-client-secret', $client_secret );
 
         wp_send_json_success( __( 'Credentials saved successfully', 'bulk-product-import' ) );
+    }
+
+    public function save_table_prefix() {
+
+        check_ajax_referer( 'bulk_product_import_nonce', 'nonce' );
+
+        if ( !current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( __( 'Unauthorized user', 'bulk-product-import' ) );
+        }
+
+        $table_prefix = sanitize_text_field( $_POST['table_prefix'] );
+        update_option( 'be-table-prefix', $table_prefix );
+
+        wp_send_json_success( __( 'Table prefix saved successfully', 'bulk-product-import' ) );
     }
 }
