@@ -37,6 +37,7 @@ class Admin_Menu {
         $client_id     = get_option( 'be-client-id' ) ?? '';
         $client_secret = get_option( 'be-client-secret' ) ?? '';
         $table_prefix  = get_option( 'be-table-prefix' ) ?? '';
+        $base_url      = get_option( 'home' ) ?? '';
 
         ?>
 
@@ -122,9 +123,40 @@ class Admin_Menu {
 
                 <div id="endpoints">
                     <div id="api-endpoints" class="common-shadow">
-                        <p>
+                        <h4>
                             <?php _e( 'API Endpoints', 'bulk-product-import' ); ?>
-                        </p>
+                        </h4>
+
+                        <div id="api-endpoints-table">
+                            <table>
+                                <tr>
+                                    <th><?php _e( 'Endpoint', 'bulk-product-import' ); ?></th>
+                                    <th><?php _e( 'Name', 'bulk-product-import' ); ?></th>
+                                    <th><?php _e( 'Action', 'bulk-product-import' ); ?></th>
+                                </tr>
+                                <tr>
+                                    <?php $server_status = $base_url . "/wp-json/bulk-import/v1/server-status"; ?>
+                                    <td id="status-api"><?php echo $server_status; ?></td>
+                                    <td><?php _e( 'Server Status', 'bulk-product-import' ) ?></td>
+                                    <td><button type="button" id="status-cp"
+                                            class="btn btn-primary btn-sm"><?php _e( 'Copy', 'bulk-product-import' ) ?></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <?php $delete_products = $base_url . "/wp-json/bulk-import/v1/delete-products"; ?>
+                                    <td id="delete-api"><?php echo $delete_products; ?></td>
+                                    <td><?php _e( 'Delete Products', 'bulk-product-import' ) ?></td>
+                                    <td><button type="button" id="delete-cp"
+                                            class="btn btn-primary btn-sm"><?php _e( 'Copy', 'bulk-product-import' ) ?></button>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <script>
+                                
+                            </script>
+
+                        </div>
                     </div>
                 </div>
 

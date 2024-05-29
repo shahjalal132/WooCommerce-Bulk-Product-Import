@@ -1,5 +1,22 @@
 (function ($) {
   $(document).ready(function () {
+    // show notification
+    function showNotification(message) {
+      Toastify({
+        text: message,
+        duration: 3000,
+        newWindow: true,
+        close: true,
+        gravity: "top", // `top` or `bottom`
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        },
+        onClick: function () {}, // Callback after click
+      }).showToast();
+    }
+
     // handle save credentials
     $("#credential-save").on("click", function (e) {
       e.preventDefault();
@@ -22,19 +39,7 @@
           if (response.success) {
             let successMessage = response.data;
             // Display an info toast with no title
-            Toastify({
-              text: successMessage,
-              duration: 3000,
-              newWindow: true,
-              close: true,
-              gravity: "top", // `top` or `bottom`
-              position: "right", // `left`, `center` or `right`
-              stopOnFocus: true, // Prevents dismissing of toast on hover
-              style: {
-                background: "linear-gradient(to right, #00b09b, #96c93d)",
-              },
-              onClick: function () {}, // Callback after click
-            }).showToast();
+            showNotification(successMessage);
           } else {
             let errorMessage = response.data;
           }
@@ -61,21 +66,8 @@
         },
         success: function (response) {
           let successMessage = response.data;
-
           // Display an info toast with no title
-          Toastify({
-            text: successMessage,
-            duration: 3000,
-            newWindow: true,
-            close: true,
-            gravity: "top", // `top` or `bottom`
-            position: "right", // `left`, `center` or `right`
-            stopOnFocus: true, // Prevents dismissing of toast on hover
-            style: {
-              background: "linear-gradient(to right, #00b09b, #96c93d)",
-            },
-            onClick: function () {}, // Callback after click
-          }).showToast();
+          showNotification(successMessage);
         },
       });
     });
@@ -83,22 +75,45 @@
     // tabs
     $("#tabs").tabs();
 
-    // confetti effects for credential save
-    let confetti = new Confetti("credential-save");
-    // Edit given parameters
-    confetti.setCount(75);
-    confetti.setSize(1);
-    confetti.setPower(25);
-    confetti.setFade(false);
-    confetti.destroyTarget(false);
+    function initializeConfetti(buttonId) {
+      let button = document.getElementById(buttonId);
+      let confetti = new Confetti(buttonId);
+      confetti.setCount(75);
+      confetti.setSize(1);
+      confetti.setPower(25);
+      confetti.setFade(false);
+      confetti.destroyTarget(false);
 
-    // confetti effects for table prefix save
-    let tablePrefix = new Confetti("save-table-prefix");
-    // Edit given parameters
-    tablePrefix.setCount(75);
-    tablePrefix.setSize(1);
-    tablePrefix.setPower(25);
-    tablePrefix.setFade(false);
-    tablePrefix.destroyTarget(false);
+      button.addEventListener("click", function () {
+        confetti.shoot();
+      });
+    }
+    // Initialize confetti for each button
+    initializeConfetti("credential-save");
+    initializeConfetti("save-table-prefix");
+
+    // copy to clipboard
+    function copyToClipboard(text) {
+      let tempInput = document.createElement("input");
+      tempInput.style.position = "absolute";
+      tempInput.style.left = "-9999px";
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+    }
+
+    document.getElementById("status-cp").addEventListener("click", function () {
+      let statusApi = document.getElementById("status-api").textContent;
+      copyToClipboard(statusApi);
+      showNotification("Copied to clipboard!");
+    });
+
+    document.getElementById("delete-cp").addEventListener("click", function () {
+      let deleteApi = document.getElementById("delete-api").textContent;
+      copyToClipboard(deleteApi);
+      showNotification("Copied to clipboard!");
+    });
   });
 })(jQuery);

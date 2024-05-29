@@ -7,7 +7,7 @@
   box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 16px 0px;
   padding: 30px 20px;
   border-radius: 8px;
-  width: 40%;
+  width: 60%;
   margin-top: 15px;
 }
 
@@ -20,7 +20,7 @@
   box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 16px 0px;
   padding: 30px 20px;
   border-radius: 8px;
-  width: 40%;
+  width: 60%;
   margin-top: 15px;
 }
 
@@ -28,6 +28,23 @@
   box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 16px 0px;
   padding: 30px 20px;
   border-radius: 8px;
-  width: 40%;
+  width: 60%;
   margin-top: 15px;
+}
+
+/* endpoints table */
+
+#api-endpoints-table table{
+  width: 100%;
+}
+
+#api-endpoints-table td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+#api-endpoints-table tr:nth-child(even) {
+  background-color: #dddddd;
 }

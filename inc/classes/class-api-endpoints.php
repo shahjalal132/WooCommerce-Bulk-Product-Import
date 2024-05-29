@@ -36,7 +36,7 @@ class Api_Endpoints {
             'callback' => [ $this, 'bulk_product_trash_delete_callback' ],
         ] );
 
-        // delete trash products from woocommerce
+        // delete categories from woocommerce
         register_rest_route( 'bulk-import/v1', '/delete-woo-cats', [
             'methods'  => 'GET',
             'callback' => [ $this, 'delete_woo_cats_callback' ],
