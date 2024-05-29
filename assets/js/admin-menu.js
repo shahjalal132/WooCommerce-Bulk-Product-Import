@@ -134,5 +134,15 @@
         copyToClipboard(deleteWooCats);
         showNotification("Copied to clipboard!");
       });
+
+    document
+      .getElementById("sync-products-cp")
+      .addEventListener("click", function () {
+        let syncProducts = document.getElementById(
+          "sync-products-api"
+        ).textContent;
+        copyToClipboard(syncProducts);
+        showNotification("Copied to clipboard!");
+      });
   });
 })(jQuery);

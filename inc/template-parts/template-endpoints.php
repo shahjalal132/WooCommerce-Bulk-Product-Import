@@ -38,4 +38,12 @@
                 class="btn btn-primary btn-sm"><?php _e( 'Copy', 'bulk-product-import' ) ?></button>
         </td>
     </tr>
+    <tr>
+        <?php $sync_products = $base_url . "/wp-json/bulk-import/v1/sync-products"; ?>
+        <td id="sync-products-api"><?php echo $sync_products; ?></td>
+        <td><?php _e( 'Sync Products', 'bulk-product-import' ) ?></td>
+        <td><button type="button" id="sync-products-cp"
+                class="btn btn-primary btn-sm"><?php _e( 'Copy', 'bulk-product-import' ) ?></button>
+        </td>
+    </tr>
 </table>
