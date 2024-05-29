@@ -16,6 +16,7 @@ class Admin_Menu {
 
     public function setup_hooks() {
         add_action( 'admin_menu', [ $this, 'register_admin_menu' ] );
+        add_action( 'admin_menu', [ $this, 'register_csv_import_menu' ] );
         add_action( 'wp_ajax_save_client_credentials', [ $this, 'save_client_credentials' ] );
         add_action( 'wp_ajax_save_table_prefix', [ $this, 'save_table_prefix' ] );
     }
@@ -29,6 +30,17 @@ class Admin_Menu {
             [ $this, 'bulk_product_import_page_html' ],
             'dashicons-cloud-upload',
             80
+        );
+    }
+
+    public function register_csv_import_menu() {
+        add_submenu_page(
+            'bulk_product_import',
+            'CSV Import',
+            'CSV Import',
+            'manage_options',
+            'bulk_product_csv_import',
+            [ $this, 'bulk_product_csv_import_page_html' ]
         );
     }
 
@@ -88,6 +100,20 @@ class Admin_Menu {
                 </div>
 
             </div>
+        </div>
+
+        <?php
+    }
+
+    public function bulk_product_csv_import_page_html() {
+        ?>
+
+        <div class="wrap">
+
+            <h2>CSV to Product</h2>
+
+            <?php include BULK_PRODUCT_IMPORT_PLUGIN_PATH . '/inc/template-parts/template-csv.php'; ?>
+            
         </div>
 
         <?php
