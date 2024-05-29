@@ -23,8 +23,8 @@ class Enqueue_Assets {
 
     public function enqueue_css() {
         // Register CSS
-        wp_register_style( "be-style", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/css/be-style.css", [], false, "all" );
-        wp_register_style( "be-bootstrap", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/css/bootstrap.min.css", [], false, "all" );
+        wp_register_style( "be-style", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/css/be-style.css",);
+        wp_register_style( "be-bootstrap", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/css/bootstrap.min.css");
 
         // enqueue CSS
         wp_enqueue_style( "be-style" );
@@ -43,9 +43,9 @@ class Enqueue_Assets {
     }
 
     public function admin_enqueue_style() {
-        wp_register_style( "be-admin-bootstrap", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/css/bootstrap.min.css", [], false, "all" );
-        wp_register_style( "be-admin-style", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/css/be-admin.css", [], false, "all" );
-        wp_register_style( "be-admin-toastify", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/css/toastify.css", [], false, "all" );
+        wp_register_style( "be-admin-bootstrap", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/css/bootstrap.min.css");
+        wp_register_style( "be-admin-style", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/css/be-admin.css");
+        wp_register_style( "be-admin-toastify", BULK_PRODUCT_IMPORT_ASSETS_PATH . "/css/toastify.css");
 
         wp_enqueue_style( "be-admin-style" );
         wp_enqueue_style( "be-admin-bootstrap" );
