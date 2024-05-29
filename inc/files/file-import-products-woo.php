@@ -34,9 +34,9 @@ function products_import_woocommerce() {
     $consumer_secret = get_option( 'be-client-secret' ) ?? '';
 
     // Retrieve pending products from the database
-    $products = $wpdb->get_results( "SELECT * FROM $products_table WHERE status = 'pending' LIMIT 1" );
+    // $products = $wpdb->get_results( "SELECT * FROM $products_table WHERE status = 'pending' LIMIT 1" );
 
-    foreach ( $products as $product ) {
+    /* foreach ( $products as $product ) {
 
         // Retrieve product data
         $serial_id = $product->id;
@@ -180,7 +180,10 @@ function products_import_woocommerce() {
                 [ 'id' => $serial_id ]
             );
 
-            return "Product Inserted Successfully";
+            return new \WP_REST_Response( [
+                'success' => true,
+                'message' => 'Product import successfully',
+            ] );
         }
-    }
+    } */
 }
