@@ -6,8 +6,10 @@
 
 defined( "ABSPATH" ) || exit( "Direct Access Not Allowed" );
 
-// Include necessary files
-require_once BULK_PRODUCT_IMPORT_PLUGIN_PATH . '/vendor/autoload.php';
+if ( file_exists( BULK_PRODUCT_IMPORT_PLUGIN_PATH . '/vendor/autoload.php' ) ) {
+    require_once BULK_PRODUCT_IMPORT_PLUGIN_PATH . '/vendor/autoload.php';
+}
+
 use Automattic\WooCommerce\Client;
 
 // Function to insert products into WooCommerce

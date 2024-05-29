@@ -1,6 +1,8 @@
 <?php
 
-require_once BULK_PRODUCT_IMPORT_PLUGIN_PATH . '/vendor/autoload.php';
+if ( file_exists( BULK_PRODUCT_IMPORT_PLUGIN_PATH . '/vendor/autoload.php' ) ) {
+    require_once BULK_PRODUCT_IMPORT_PLUGIN_PATH . '/vendor/autoload.php';
+}
 
 if ( isset( $_POST['upload_csv'] ) ) {
 
@@ -73,8 +75,8 @@ if ( isset( $_POST['upload_csv'] ) ) {
 <?php if ( isset( $json ) ) : ?>
     <h3>JSON Data:</h3>
     <pre>
-        <?php echo htmlspecialchars( $json ); ?>
-    </pre>
+            <?php echo htmlspecialchars( $json ); ?>
+        </pre>
 <?php endif; ?>
 
 <?php if ( isset( $uploadError ) ) : ?>
