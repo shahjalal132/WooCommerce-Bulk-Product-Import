@@ -115,5 +115,24 @@
       copyToClipboard(deleteApi);
       showNotification("Copied to clipboard!");
     });
+
+    document
+      .getElementById("delete-trash-cp")
+      .addEventListener("click", function () {
+        let deleteTrashApi =
+          document.getElementById("delete-trash-api").textContent;
+        copyToClipboard(deleteTrashApi);
+        showNotification("Copied to clipboard!");
+      });
+
+    document
+      .getElementById("delete-woo-cats-cp")
+      .addEventListener("click", function () {
+        let deleteWooCats = document.getElementById(
+          "delete-woo-cats-api"
+        ).textContent;
+        copyToClipboard(deleteWooCats);
+        showNotification("Copied to clipboard!");
+      });
   });
 })(jQuery);
