@@ -22,6 +22,18 @@ The WooCommerce Bulk Product Import Plugin is designed to streamline the process
 - **Flexibility**: Adapts to various data sources and formats, providing versatility in product management.
 - **Reliability**: Developed with robust error handling and logging to ensure reliable performance.
 
+## Prerequisites
+
+- **PHP**: You have good understanding of PHP.
+- **MySQL**: You have a basic understanding of MySQL.
+- **Google Sheets API**: You have a basic understanding of the Google Sheets API.
+- **WooCommerce Development**: You have a basic understanding of the WooCommerce development.
+- **Theme Development**: You have a basic understanding of the theme development.
+- **WooCommerce**: The plugin requires the latest version of WooCommerce.
+- **WordPress**: The plugin requires the latest version of WordPress.
+- **Cron Jobs**: The plugin requires the ability to schedule cron jobs.
+
+
 ## Technical Details
 
 - **Compatibility**: Compatible with the latest versions of WooCommerce and WordPress.
@@ -31,10 +43,12 @@ The WooCommerce Bulk Product Import Plugin is designed to streamline the process
 
 ## Installation
 
-1. **Download the Plugin**: Obtain the plugin from the WordPress Plugin Repository or the official website.
-2. **Upload to WordPress**: Navigate to Plugins > Add New in your WordPress dashboard, upload the plugin file, and activate it.
-3. **Configure Settings**: Go to the plugin settings page to configure your import sources and mapping options.
-4. **Run Imports**: Start your product imports manually or schedule them for automated execution.
+1. **Download the Plugin**: Obtain the plugin from the GitHub Repository or the official website.
+2. **Download Dependencies**: Navigate root directory and run `composer install`.
+3. **Upload to WordPress**: Navigate to Plugins > Add New in your WordPress dashboard, upload the plugin file, and activate it.
+4. **Configure Settings**: Go to the plugin settings page to configure your database prefix api credentials and others details and mapping options.
+5. **Edit api calls and mappings**: edit file-insert-products-db.php and file-import-products-woo.php file as required.
+6. **Start Import**: Once the configuration is complete, you can start the import.
 
 ## Future Enhancements
 
@@ -43,10 +57,10 @@ The WooCommerce Bulk Product Import Plugin is designed to streamline the process
 - **Improved UI/UX**: Continuous improvements to the user interface for better usability.
 - **Additional Customization Options**: More options for custom field mappings and transformations.
 
-## Contact Information
+## Author
 
-For support, feature requests, or customization inquiries, please contact:
-
-- **Email**: support@woocommercebulkimport.com
-- **Website**: [www.woocommercebulkimport.com](http://www.woocommercebulkimport.com)
-- **Support Forum**: [Support Forum Link](http://www.woocommercebulkimport.com/forum)
+- **Name**: Muhammad Shah jalal
+- **Email**: rjshahjalal132@gmail.com
+- **Linkedin**: [Muhammad Shah jalal](https://www.linkedin.com/in/dev-shah-jalal)
+- **Profession**: Web Developer
+- **Company**: [Imjol](https://imjol.com/)
