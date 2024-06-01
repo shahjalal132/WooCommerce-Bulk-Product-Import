@@ -144,5 +144,25 @@
         copyToClipboard(syncProducts);
         showNotification("Copied to clipboard!");
       });
+
+    document
+      .getElementById("insert-price-cp")
+      .addEventListener("click", function () {
+        let syncProducts = document.getElementById(
+          "insert-price-api"
+        ).textContent;
+        copyToClipboard(syncProducts);
+        showNotification("Copied to clipboard!");
+      });
+
+    document
+      .getElementById("insert-stock-cp")
+      .addEventListener("click", function () {
+        let syncProducts = document.getElementById(
+          "insert-stock-api"
+        ).textContent;
+        copyToClipboard(syncProducts);
+        showNotification("Copied to clipboard!");
+      });
   });
 })(jQuery);
