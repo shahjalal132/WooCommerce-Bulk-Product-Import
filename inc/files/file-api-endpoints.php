@@ -25,6 +25,11 @@ function bulk_products_import() {
         'callback' => 'insert_price_db_api_callback',
     ] );
 
+    register_rest_route( 'bulk-import/v1', '/insert-stock-db', [
+        'methods'  => 'GET',
+        'callback' => 'insert_stock_db_api_callback',
+    ] );
+
 }
 
 function sync_products_api_callback() {
@@ -37,4 +42,8 @@ function insert_products_db_api_callback() {
 
 function insert_price_db_api_callback() {
     return insert_price_db();
+}
+
+function insert_stock_db_api_callback() {
+    return insert_stock_db();
 }
