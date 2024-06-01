@@ -15,8 +15,17 @@ function bulk_products_import() {
         'callback' => 'sync_products_api_callback',
     ] );
 
+    register_rest_route( 'bulk-import/v1', '/insert-products-db', [
+        'methods'  => 'GET',
+        'callback' => 'insert_products_db_api_callback',
+    ] );
+
 }
 
 function sync_products_api_callback() {
     return products_import_woocommerce();
+}
+
+function insert_products_db_api_callback() {
+    return insert_products_db();
 }

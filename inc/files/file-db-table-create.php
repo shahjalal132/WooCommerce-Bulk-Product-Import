@@ -9,7 +9,7 @@ function sync_products() {
 
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
         id INT AUTO_INCREMENT,
-        product_number VARCHAR(255) NOT NULL,
+        product_number VARCHAR(255) NULL,
         product_data LONGTEXT NOT NULL,
         status VARCHAR(255) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
