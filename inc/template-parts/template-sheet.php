@@ -26,10 +26,61 @@ class Sheet_Import {
         $response = $this->service->spreadsheets_values->get( $this->spreadsheetID, $this->sheetRange );
         return $response->getValues();
     }
+
+    public function insertProductsToDatabase() {
+
+        // fetch products from sheet
+        $products = $this->fetchProductsFromSheets();
+
+        global $wpdb;
+        $table_prefix   = get_option( 'be-table-prefix' ) ?? '';
+        $products_table = $wpdb->prefix . $table_prefix . 'sync_products';
+        // $wpdb->query( "TRUNCATE TABLE $products_table" );
+
+        foreach ( $products as $product ) {
+
+            // extract products
+            $product_data = json_encode( $product );
+
+            echo '<pre>';
+            print_r( $product_data );
+            echo '</pre>';
+
+            /* $wpdb->insert(
+                $products_table,
+                [
+                    'product_number' => '',
+                    'product_data'   => $product_data,
+                    'status'         => 'pending',
+                ]
+            ); */
+        }
+    }
+}
+?>
+
+
+<form action="" method="post">
+    <input type="submit" name="fetch_products" class="btn btn-primary" id="fetch_products" value="Fetch Products">
+    <input type="submit" name="insert_products" class="btn btn-primary" id="insert_products" value="Insert Products">
+</form>
+
+<?php
+
+if ( isset( $_POST['fetch_products'] ) ) {
+
+    // instance of class
+    $sheetProducts = new Sheet_Import();
+
+    // fetch products
+    $products = $sheetProducts->fetchProductsFromSheets();
+
+    echo '<pre>';
+    print_r( $products );
+    echo '</pre>';
 }
 
-/* $sheetProducts = new Sheet_Import();
-$products      = $sheetProducts->fetchProductsFromSheets();
-echo '<pre>';
-print_r( $products );
-echo '</pre>'; */
+if ( isset( $_POST['insert_products'] ) ) {
+    $sheetProducts = new Sheet_Import();
+    $sheetProducts->insertProductsToDatabase();
+}
