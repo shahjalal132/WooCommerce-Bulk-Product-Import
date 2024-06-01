@@ -17,6 +17,7 @@ class Admin_Menu {
     public function setup_hooks() {
         add_action( 'admin_menu', [ $this, 'register_admin_menu' ] );
         add_action( 'admin_menu', [ $this, 'register_csv_import_menu' ] );
+        add_action( 'admin_menu', [ $this, 'register_sheet_import_menu' ] );
         add_action( 'wp_ajax_save_client_credentials', [ $this, 'save_client_credentials' ] );
         add_action( 'wp_ajax_save_table_prefix', [ $this, 'save_table_prefix' ] );
     }
@@ -44,12 +45,23 @@ class Admin_Menu {
         );
     }
 
+    public function register_sheet_import_menu() {
+        add_submenu_page(
+            'bulk_product_import',
+            'Sheet Import',
+            'Sheet Import',
+            'manage_options',
+            'bulk_product_sheet_import',
+            [ $this, 'bulk_product_sheet_import_page_html' ]
+        );
+    }
+
     public function bulk_product_import_page_html() {
         ?>
 
         <div class="entry-header">
             <h1 class="entry-title text-center mt-3" style="color: #2271B1">
-                <?php _e( 'WooCommerce Bulk Product Import', 'bulk-product-import' ); ?>
+                <?php esc_html_e( 'WooCommerce Bulk Product Import', 'bulk-product-import' ); ?>
             </h1>
         </div>
 
@@ -58,15 +70,15 @@ class Admin_Menu {
 
                 <ul class="nav nav-pills">
                     <li class="nav-item"><a href="#api"
-                            class="nav-link be-nav-links"><?php _e( 'API', 'bulk-product-import' ); ?></a></li>
+                            class="nav-link be-nav-links"><?php esc_html_e( 'API', 'bulk-product-import' ); ?></a></li>
                     <li class="nav-item"><a href="#product"
-                            class="nav-link be-nav-links"><?php _e( 'Product', 'bulk-product-import' ); ?></a></li>
+                            class="nav-link be-nav-links"><?php esc_html_e( 'Product', 'bulk-product-import' ); ?></a></li>
                     <li class="nav-item"><a href="#options"
-                            class="nav-link be-nav-links"><?php _e( 'Options', 'bulk-product-import' ); ?></a></li>
+                            class="nav-link be-nav-links"><?php esc_html_e( 'Options', 'bulk-product-import' ); ?></a></li>
                     <li class="nav-item"><a href="#tables"
-                            class="nav-link be-nav-links"><?php _e( 'Tables', 'bulk-product-import' ); ?></a></li>
+                            class="nav-link be-nav-links"><?php esc_html_e( 'Tables', 'bulk-product-import' ); ?></a></li>
                     <li class="nav-item"><a href="#endpoints"
-                            class="nav-link be-nav-links"><?php _e( 'Endpoints', 'bulk-product-import' ); ?></a></li>
+                            class="nav-link be-nav-links"><?php esc_html_e( 'Endpoints', 'bulk-product-import' ); ?></a></li>
                 </ul>
 
                 <div id="api">
@@ -108,12 +120,30 @@ class Admin_Menu {
     public function bulk_product_csv_import_page_html() {
         ?>
 
+        <div class="entry-header">
+            <h1 class="entry-title text-center mt-3" style="color: #2271B1">
+                <?php esc_html_e( 'WooCommerce Bulk Product Import CSV', 'bulk-product-import' ); ?>
+            </h1>
+        </div>
+
         <div class="wrap">
-
-            <h2>CSV to Product</h2>
-
             <?php include BULK_PRODUCT_IMPORT_PLUGIN_PATH . '/inc/template-parts/template-csv.php'; ?>
-            
+        </div>
+
+        <?php
+    }
+
+    public function bulk_product_sheet_import_page_html() {
+        ?>
+
+        <div class="entry-header">
+            <h1 class="entry-title text-center mt-3" style="color: #2271B1">
+                <?php esc_html_e( 'WooCommerce Bulk Product Import Sheet', 'bulk-product-import' ); ?>
+            </h1>
+        </div>
+
+        <div class="wrap">
+            <?php include BULK_PRODUCT_IMPORT_PLUGIN_PATH . '/inc/template-parts/template-sheet.php'; ?>
         </div>
 
         <?php
