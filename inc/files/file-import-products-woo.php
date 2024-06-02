@@ -54,6 +54,9 @@ function products_import_woocommerce() {
             $consumer_secret,
             [
                 'verify_ssl' => false,
+                'wp_api'     => true,
+                'version'    => 'wc/v3',
+                'timeout'    => 400,
             ]
         );
 
