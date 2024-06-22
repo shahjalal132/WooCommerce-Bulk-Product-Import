@@ -35,114 +35,122 @@ function products_import_woocommerce() {
         $consumer_key    = get_option( 'be-client-id' ) ?? '';
         $consumer_secret = get_option( 'be-client-secret' ) ?? '';
 
+        // SQL query
+        $sql = "SELECT * FROM $products_table WHERE status = 'pending' LIMIT 1";
+
         // Retrieve pending products from the database
-        $products = $wpdb->get_results( "SELECT * FROM $products_table WHERE status = 'pending' LIMIT 1" );
+        $products = $wpdb->get_results( $wpdb->prepare( $sql ) );
 
-        foreach ( $products as $product ) {
+        if ( !empty( $products ) && is_array( $products ) ) {
+            foreach ( $products as $product ) {
 
-            // Retrieve product data
-            $serial_id = $product->id;
-            $sku       = '';
-            $title     = '';
-            $quantity  = 0;
-            $images    = [];
+                // Retrieve product data
+                $serial_id = $product->id;
+                $sku       = '';
+                $title     = '';
+                $quantity  = 0;
+                $images    = [];
 
-            // Set up the API client with WooCommerce store URL and credentials
-            $client = new Client(
-                $website_url,
-                $consumer_key,
-                $consumer_secret,
-                [
-                    'verify_ssl' => false,
-                    'wp_api'     => true,
-                    'version'    => 'wc/v3',
-                    'timeout'    => 400,
-                ]
-            );
+                // Set up the API client with WooCommerce store URL and credentials
+                $client = new Client(
+                    $website_url,
+                    $consumer_key,
+                    $consumer_secret,
+                    [
+                        'verify_ssl' => false,
+                        'wp_api'     => true,
+                        'version'    => 'wc/v3',
+                        'timeout'    => 400,
+                    ]
+                );
 
-            // Check if the product already exists in WooCommerce
-            $args = array(
-                'post_type'  => 'product',
-                'meta_query' => array(
-                    array(
-                        'key'     => '_sku',
-                        'value'   => $sku,
-                        'compare' => '=',
+                // Check if the product already exists in WooCommerce
+                $args = array(
+                    'post_type'  => 'product',
+                    'meta_query' => array(
+                        array(
+                            'key'     => '_sku',
+                            'value'   => $sku,
+                            'compare' => '=',
+                        ),
                     ),
-                ),
-            );
-
-            // Check if the product already exists
-            $existing_products = new WP_Query( $args );
-
-            if ( $existing_products->have_posts() ) {
-                $existing_products->the_post();
-
-                // Get product id
-                $_product_id = get_the_ID();
-
-                // Update the status of the processed product in your database
-                $wpdb->update(
-                    $products_table,
-                    [ 'status' => 'completed' ],
-                    [ 'id' => $serial_id ]
                 );
 
-                // Update the variable product if it already exists
-                $product_data = [
-                    'name'        => $title,
-                    'sku'         => $sku,
-                    'type'        => 'variable',
-                    'description' => '',
-                    'attributes'  => [],
-                ];
+                // Check if the product already exists
+                $existing_products = new WP_Query( $args );
 
-                // Update product
-                $client->put( 'products/' . $_product_id, $product_data );
+                if ( $existing_products->have_posts() ) {
+                    $existing_products->the_post();
 
-            } else {
-                // Create a new variable product if it does not exist
-                $_product_data = [
-                    'name'        => $title,
-                    'sku'         => $sku,
-                    'type'        => 'variable',
-                    'description' => '',
-                    'attributes'  => [],
-                ];
+                    // Get product id
+                    $_product_id = get_the_ID();
 
-                // Create the product
-                $_products  = $client->post( 'products', $_product_data );
-                $product_id = $_products->id;
+                    // Update the status of the processed product in your database
+                    $wpdb->update(
+                        $products_table,
+                        [ 'status' => 'completed' ],
+                        [ 'id' => $serial_id ]
+                    );
 
-                // Set product information
-                wp_set_object_terms( $product_id, 'variable', 'product_type' );
-                update_post_meta( $product_id, '_visibility', 'visible' );
+                    // Update the variable product if it already exists
+                    $product_data = [
+                        'name'        => $title,
+                        'sku'         => $sku,
+                        'type'        => 'variable',
+                        'description' => '',
+                        'attributes'  => [],
+                    ];
 
-                // Update product meta data in WordPress
-                update_post_meta( $product_id, '_stock', $quantity );
+                    // Update product
+                    $client->put( 'products/' . $_product_id, $product_data );
 
-                // display out of stock message if stock is 0
-                if ( $quantity <= 0 ) {
-                    update_post_meta( $product_id, '_stock_status', 'outofstock' );
                 } else {
-                    update_post_meta( $product_id, '_stock_status', 'instock' );
+                    // Create a new variable product if it does not exist
+                    $_product_data = [
+                        'name'        => $title,
+                        'sku'         => $sku,
+                        'type'        => 'variable',
+                        'description' => '',
+                        'attributes'  => [],
+                    ];
+
+                    // Create the product
+                    $_products  = $client->post( 'products', $_product_data );
+                    $product_id = $_products->id;
+
+                    // Set product information
+                    wp_set_object_terms( $product_id, 'variable', 'product_type' );
+                    update_post_meta( $product_id, '_visibility', 'visible' );
+
+                    // Update product meta data in WordPress
+                    update_post_meta( $product_id, '_stock', $quantity );
+
+                    // display out of stock message if stock is 0
+                    if ( $quantity <= 0 ) {
+                        update_post_meta( $product_id, '_stock_status', 'outofstock' );
+                    } else {
+                        update_post_meta( $product_id, '_stock_status', 'instock' );
+                    }
+                    update_post_meta( $product_id, '_manage_stock', 'yes' );
+
+                    // Set product image gallery and thumbnail
+                    if ( $images ) {
+                        set_product_images( $product_id, $images );
+                    }
+
+
+                    // Update the status of the processed product in your database
+                    $wpdb->update(
+                        $products_table,
+                        [ 'status' => 'completed' ],
+                        [ 'id' => $serial_id ]
+                    );
+
+                    return new \WP_REST_Response( [
+                        'success' => true,
+                        'message' => 'Product import successfully',
+                    ] );
                 }
-                update_post_meta( $product_id, '_manage_stock', 'yes' );
-
-                // Set product image gallery and thumbnail
-
-
-                // Update the status of the processed product in your database
-                $wpdb->update(
-                    $products_table,
-                    [ 'status' => 'completed' ],
-                    [ 'id' => $serial_id ]
-                );
-
-                return new \WP_REST_Response( [
-                    'success' => true,
-                    'message' => 'Product import successfully',
-                ] );
             }
         }
     } catch (Exception $e) {
