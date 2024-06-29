@@ -11,6 +11,7 @@ if ( file_exists( BULK_PRODUCT_IMPORT_PLUGIN_PATH . '/vendor/autoload.php' ) ) {
 }
 
 use Automattic\WooCommerce\Client;
+use Automattic\WooCommerce\HttpClient\HttpClientException;
 
 // Function to insert products into WooCommerce
 function products_import_woocommerce() {
@@ -138,7 +139,6 @@ function products_import_woocommerce() {
                         set_product_images( $product_id, $images );
                     }
 
-
                     // Update the status of the processed product in your database
                     $wpdb->update(
                         $products_table,
@@ -153,10 +153,15 @@ function products_import_woocommerce() {
                 }
             }
         }
-    } catch (Exception $e) {
+    } catch (HttpClientException $e) {
+
+        echo '<pre><code>' . print_r( $e->getMessage(), true ) . '</code><pre>'; // Error message.
+        echo '<pre><code>' . print_r( $e->getRequest(), true ) . '</code><pre>'; // Last request data.
+        echo '<pre><code>' . print_r( $e->getResponse(), true ) . '</code><pre>'; // Last response data.
+
         return new \WP_REST_Response( [
             'success' => false,
-            'message' => 'Product import failed: ' . $e->getMessage(),
+            'message' => 'Product import failed.',
         ] );
     }
 }
