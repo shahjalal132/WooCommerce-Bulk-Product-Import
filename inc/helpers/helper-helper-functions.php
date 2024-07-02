@@ -37,7 +37,7 @@ function put_api_response_data( $data ) {
     }
 
     // Construct file path for response data
-    $file_name = $directory . 'response.txt';
+    $file_name = $directory . 'response.log';
 
     // Get the current date and time
     $current_datetime = date( 'Y-m-d H:i:s' );
@@ -46,7 +46,7 @@ function put_api_response_data( $data ) {
     $data = $data . ' - ' . $current_datetime;
 
     // Append new response data to the existing file
-    if ( file_put_contents( $file_name, $data . PHP_EOL, FILE_APPEND | LOCK_EX ) !== false ) {
+    if ( file_put_contents( $file_name, $data . "\n\n", FILE_APPEND | LOCK_EX ) !== false ) {
         return "Data appended to file successfully.";
     } else {
         return "Failed to append data to file.";
@@ -68,7 +68,7 @@ function put_api_error_message( $error_message ) {
     }
 
     // Construct file path for error log
-    $file_name = $directory . 'error-log.txt';
+    $file_name = $directory . 'error-log.log';
 
     // Get the current date and time
     $current_datetime = date( 'Y-m-d H:i:s' );
@@ -77,7 +77,7 @@ function put_api_error_message( $error_message ) {
     $error_message = $error_message . ' - ' . $current_datetime;
 
     // Append new error message to the existing file
-    if ( file_put_contents( $file_name, $error_message . PHP_EOL, FILE_APPEND | LOCK_EX ) !== false ) {
+    if ( file_put_contents( $file_name, $error_message . "\n\n", FILE_APPEND | LOCK_EX ) !== false ) {
         return "Error message appended to file successfully.";
     } else {
         return "Failed to append error message to file.";
