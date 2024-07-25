@@ -13,7 +13,13 @@ if ( file_exists( BULK_PRODUCT_IMPORT_PLUGIN_PATH . '/vendor/autoload.php' ) ) {
 use Automattic\WooCommerce\Client;
 use Automattic\WooCommerce\HttpClient\HttpClientException;
 
-// Function to insert products into WooCommerce
+/**
+ * Function to insert products into WooCommerce
+ * Fetch product data from database
+ * Process product data and insert into WooCommerce
+ * 
+ * @return string|WP_REST_Response
+ */
 function products_import_woocommerce() {
     try {
         // Get global $wpdb object
@@ -50,7 +56,16 @@ function products_import_woocommerce() {
                 $sku       = '';
                 $title     = '';
                 $quantity  = 0;
-                $images    = [];
+
+                // Retrieve product images
+                $images = [];
+
+                // Retrieve product category
+                $category = '';
+
+                // Extract prices
+                $regular_price = 0;
+                $sale_price    = 0;
 
                 // Set up the API client with WooCommerce store URL and credentials
                 $client = new Client(
@@ -105,6 +120,11 @@ function products_import_woocommerce() {
                     // Update product
                     $client->put( 'products/' . $_product_id, $product_data );
 
+                    return new \WP_REST_Response( [
+                        'success' => true,
+                        'message' => 'Product updated successfully',
+                    ] );
+
                 } else {
                     // Create a new simple product if it does not exist
                     $_product_data = [
@@ -125,6 +145,13 @@ function products_import_woocommerce() {
 
                     // Update product meta data in WordPress
                     update_post_meta( $product_id, '_stock', $quantity );
+
+                    // Update product meta data
+                    update_post_meta( $product_id, '_regular_price', $regular_price );
+                    update_post_meta( $product_id, '_price', $sale_price );
+
+                    // Update product category
+                    wp_set_object_terms( $product_id, $category, 'product_cat' );
 
                     // display out of stock message if stock is 0
                     if ( $quantity <= 0 ) {
