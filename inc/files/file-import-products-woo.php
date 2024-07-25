@@ -52,16 +52,20 @@ function products_import_woocommerce() {
             foreach ( $products as $product ) {
 
                 // Retrieve product data
-                $serial_id = $product->id;
-                $sku       = '';
-                $title     = '';
-                $quantity  = 0;
+                $serial_id   = $product->id;
+                $sku         = '';
+                $title       = '';
+                $description = '';
+                $quantity    = 0;
 
                 // Retrieve product images
                 $images = [];
 
                 // Retrieve product category
                 $category = '';
+
+                // Retrieve product tags
+                $tags = '';
 
                 // Extract prices
                 $regular_price = 0;
@@ -113,13 +117,14 @@ function products_import_woocommerce() {
                         'name'        => $title,
                         'sku'         => $sku,
                         'type'        => 'simple',
-                        'description' => '',
+                        'description' => $description,
                         'attributes'  => [],
                     ];
 
                     // Update product
                     $client->put( 'products/' . $_product_id, $product_data );
 
+                    // Return success response
                     return new \WP_REST_Response( [
                         'success' => true,
                         'message' => 'Product updated successfully',
@@ -131,7 +136,7 @@ function products_import_woocommerce() {
                         'name'        => $title,
                         'sku'         => $sku,
                         'type'        => 'simple',
-                        'description' => '',
+                        'description' => $description,
                         'attributes'  => [],
                     ];
 
@@ -143,17 +148,20 @@ function products_import_woocommerce() {
                     wp_set_object_terms( $product_id, 'simple', 'product_type' );
                     update_post_meta( $product_id, '_visibility', 'visible' );
 
-                    // Update product meta data in WordPress
+                    // Update product stock
                     update_post_meta( $product_id, '_stock', $quantity );
 
-                    // Update product meta data
+                    // Update product prices
                     update_post_meta( $product_id, '_regular_price', $regular_price );
                     update_post_meta( $product_id, '_price', $sale_price );
 
                     // Update product category
                     wp_set_object_terms( $product_id, $category, 'product_cat' );
 
-                    // display out of stock message if stock is 0
+                    // Update product tags
+                    wp_set_object_terms( $product_id, $tags, 'product_tag' );
+
+                    // Display out of stock message if stock is 0
                     if ( $quantity <= 0 ) {
                         update_post_meta( $product_id, '_stock_status', 'outofstock' );
                     } else {
@@ -166,13 +174,14 @@ function products_import_woocommerce() {
                         set_product_images( $product_id, $images );
                     }
 
-                    // Update the status of the processed product in your database
+                    // Update the status of product in database
                     $wpdb->update(
                         $products_table,
                         [ 'status' => 'completed' ],
                         [ 'id' => $serial_id ]
                     );
 
+                    // Return success response
                     return new \WP_REST_Response( [
                         'success' => true,
                         'message' => 'Product import successfully',
