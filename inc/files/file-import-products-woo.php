@@ -93,11 +93,11 @@ function products_import_woocommerce() {
                         [ 'id' => $serial_id ]
                     );
 
-                    // Update the variable product if it already exists
+                    // Update the simple product if it already exists
                     $product_data = [
                         'name'        => $title,
                         'sku'         => $sku,
-                        'type'        => 'variable',
+                        'type'        => 'simple',
                         'description' => '',
                         'attributes'  => [],
                     ];
@@ -106,11 +106,11 @@ function products_import_woocommerce() {
                     $client->put( 'products/' . $_product_id, $product_data );
 
                 } else {
-                    // Create a new variable product if it does not exist
+                    // Create a new simple product if it does not exist
                     $_product_data = [
                         'name'        => $title,
                         'sku'         => $sku,
-                        'type'        => 'variable',
+                        'type'        => 'simple',
                         'description' => '',
                         'attributes'  => [],
                     ];
@@ -120,7 +120,7 @@ function products_import_woocommerce() {
                     $product_id = $_products->id;
 
                     // Set product information
-                    wp_set_object_terms( $product_id, 'variable', 'product_type' );
+                    wp_set_object_terms( $product_id, 'simple', 'product_type' );
                     update_post_meta( $product_id, '_visibility', 'visible' );
 
                     // Update product meta data in WordPress
